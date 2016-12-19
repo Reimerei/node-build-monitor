@@ -58,7 +58,7 @@ module.exports = function () {
                   callback(error);
                   return;
                 }
-                
+
                 callback(error, simplifyBuild(data));
             });
         },
@@ -119,7 +119,7 @@ module.exports = function () {
                 isRunning: res.running === true,
                 startedAt: parseStartDate(res),
                 finishedAt: parseFinishDate(res),
-                requestedFor: getRequestedFor(res),
+                requestedFor: res.branchName,
                 statusText: getStatusText(res),
                 status: getStatus(res),
                 reason: res.triggered.type,
