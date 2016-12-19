@@ -153,12 +153,14 @@ module.exports = function () {
                   return;
                 }
 
-                if(self.configuration.latestBuildOnly) {
-                    Array.prototype.push.apply(allBuilds, [pluginBuilds.shift()]);
-                }
-                else {
-                    Array.prototype.push.apply(allBuilds, pluginBuilds);
-                }
+                if(pluginBuilds.length > 0) {
+                    if(self.configuration.latestBuildOnly) {
+                        Array.prototype.push.apply(allBuilds, [pluginBuilds.shift()]);
+                    }
+                    else {
+                        Array.prototype.push.apply(allBuilds, pluginBuilds);
+                    }
+                };
                 callback();
             });
         },
