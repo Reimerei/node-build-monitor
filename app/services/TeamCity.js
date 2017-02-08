@@ -47,7 +47,7 @@ module.exports = function () {
                 }
 
                 var merged = selectMany(data, function (x) { return x.build || []; });
-                callback(error, merged);
+                callback(error, [merged[0]]);
             });
         },
         requestBuild = function (build, callback) {
