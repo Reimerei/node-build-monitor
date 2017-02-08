@@ -35,13 +35,11 @@ module.exports = function () {
         },
         requestBuilds = function (callback) {
             var requestFinishedBuilds = makeRequest.bind(this, getFinishedBuildsUrl());
-            var requestCanceledBuilds = makeRequest.bind(this, getCanceledBuildsUrl());
             var requestRunningBuilds = makeRequest.bind(this, getRunningBuildsUrl());
 
             async.parallel([
                 requestRunningBuilds,
-                requestFinishedBuilds,
-                requestCanceledBuilds
+                requestFinishedBuilds
             ], function (error, data) {
                 if (error) {
                   callback(error);
