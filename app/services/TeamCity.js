@@ -19,6 +19,12 @@ module.exports = function () {
         getRunningBuildsUrl = function () {
             return getFinishedBuildsUrl() + '?locator=running:true';
         },
+        getLatestBuildUrl = function () {
+            url = self.configuration.url + 
+                '/httpAuth/app/rest/buildTypes/id:' + self.configuration.buildConfigurationId + 
+                '/builds?locator=defaultFilter:false,count:1,branch:default:any';            
+            return url;
+        }
         getBuildDetailsUrl = function (url) {
             return self.configuration.url + url;
         },
@@ -34,12 +40,10 @@ module.exports = function () {
             });
         },
         requestBuilds = function (callback) {
-            var requestFinishedBuilds = makeRequest.bind(this, getFinishedBuildsUrl());
-            var requestRunningBuilds = makeRequest.bind(this, getRunningBuildsUrl());
+            var requestLatestBuild = makeRequest.bind(this, getLatestBuildUrl());
 
             async.parallel([
-                requestRunningBuilds,
-                requestFinishedBuilds
+                requestLatestBuild
             ], function (error, data) {
                 if (error) {
                   callback(error);
@@ -47,7 +51,7 @@ module.exports = function () {
                 }
 
                 var merged = selectMany(data, function (x) { return x.build || []; });
-                callback(error, [merged[0]]);
+                callback(error, merged);
             });
         },
         requestBuild = function (build, callback) {
@@ -56,7 +60,6 @@ module.exports = function () {
                   callback(error);
                   return;
                 }
-
                 callback(error, simplifyBuild(data));
             });
         },
