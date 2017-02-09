@@ -20,15 +20,15 @@ module.exports = function () {
             return getFinishedBuildsUrl() + '?locator=running:true';
         },
         getLatestBuildUrl = function () {
-            url = self.configuration.url + 
+            return self.configuration.url + 
                 '/httpAuth/app/rest/buildTypes/id:' + self.configuration.buildConfigurationId + 
                 '/builds?locator=defaultFilter:false,count:1,branch:default:any';            
-            return url;
-        }
+        },
         getBuildDetailsUrl = function (url) {
             return self.configuration.url + url;
         },
         makeRequest = function (url, callback) {
+            console.log("REQUEST: " + url)
             request({
                 'url': url,
                 'rejectUnauthorized': false,
