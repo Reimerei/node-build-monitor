@@ -28,7 +28,6 @@ module.exports = function () {
             return self.configuration.url + url;
         },
         makeRequest = function (url, callback) {
-            console.log("REQUEST: " + url)
             request({
                 'url': url,
                 'rejectUnauthorized': false,
